@@ -7,10 +7,15 @@ export class StoreService {
 
   constructor() {
     this.store = {
+      albums: [],
       artists: [],
       users: [],
       tracks: [],
     };
+  }
+
+  getAlbums() {
+    return this.store.albums;
   }
 
   getArtists() {
@@ -25,11 +30,35 @@ export class StoreService {
     return this.store.tracks;
   }
 
+  deleteAlbum(id: string) {
+    const tracks = this.store.tracks.filter((track) => track.albumId === id);
+
+    tracks.forEach((track) => {
+      track.albumId = null;
+    });
+
+    const index = this.store.albums.findIndex((artist) => artist.id === id);
+
+    if (index !== -1) {
+      this.store.albums.splice(index, 1);
+
+      return true;
+    }
+
+    return false;
+  }
+
   deleteArtist(id: string) {
     const tracks = this.store.tracks.filter((track) => track.artistId === id);
 
     tracks.forEach((track) => {
       track.artistId = null;
+    });
+
+    const albums = this.store.albums.filter((album) => album.artistId === id);
+
+    albums.forEach((album) => {
+      album.artistId = null;
     });
 
     const index = this.store.artists.findIndex((artist) => artist.id === id);

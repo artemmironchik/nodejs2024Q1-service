@@ -50,17 +50,17 @@ export class ArtistService {
 
   private isIdValid(id: string) {
     if (!isUUID(id)) {
-      throw new BadRequestException(`Invalid track id ${id}`);
+      throw new BadRequestException(`Invalid artist id ${id}`);
     }
   }
 
   private isArtistExists(id: string) {
-    const track = this.artistRepository.getArtistById(id);
+    const artist = this.artistRepository.getArtistById(id);
 
-    if (!track) {
-      throw new NotFoundException('Track not found');
+    if (!artist) {
+      throw new NotFoundException('Artist not found');
     }
 
-    return track;
+    return artist;
   }
 }
