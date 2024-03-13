@@ -6,7 +6,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 
 @Injectable()
 export class UserRepository {
-  private readonly users: User[] = null;
+  private readonly users: User[] = [];
 
   getAllUsers(): User[] {
     return this.users;
