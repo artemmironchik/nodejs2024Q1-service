@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
+import { StoreService } from 'src/modules/store/services/store.service';
 import { User } from '../types/user';
 import { CreateUserDto } from '../dto/create-user.dto';
 
 @Injectable()
 export class UserRepository {
-  private readonly users: User[] = [];
+  private readonly users: User[] = null;
+
+  constructor(private readonly storeService: StoreService) {
+    this.users = this.storeService.getUsers();
+  }
 
   getAllUsers(): User[] {
     return this.users;
@@ -44,14 +49,6 @@ export class UserRepository {
   }
 
   deleteUser(id: string): boolean {
-    const index = this.users.findIndex((user) => user.id === id);
-
-    if (index !== -1) {
-      this.users.splice(index, 1);
-
-      return true;
-    }
-
-    return false;
+    return this.storeService.deleteUser(id);
   }
 }

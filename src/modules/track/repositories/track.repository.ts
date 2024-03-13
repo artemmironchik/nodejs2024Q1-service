@@ -1,13 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
+import { StoreService } from 'src/modules/store/services/store.service';
 import { Track } from '../types/track';
 import { CreateTrackDto } from '../dto/create-track.dto';
 import { UpdateTrackDto } from '../dto/update-track.dto';
 
 @Injectable()
 export class TrackRepository {
-  private readonly tracks: Track[] = [];
+  private readonly tracks: Track[] = null;
+
+  constructor(private readonly storeService: StoreService) {
+    this.tracks = this.storeService.getTracks();
+  }
 
   getAllTracks(): Track[] {
     return this.tracks;
@@ -44,14 +49,6 @@ export class TrackRepository {
   }
 
   deleteTrack(id: string): boolean {
-    const index = this.tracks.findIndex((track) => track.id === id);
-
-    if (index !== -1) {
-      this.tracks.splice(index, 1);
-
-      return true;
-    }
-
-    return false;
+    return this.storeService.deleteTrack(id);
   }
 }
