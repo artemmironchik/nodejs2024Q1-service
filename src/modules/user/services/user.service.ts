@@ -52,7 +52,10 @@ export class UserService {
       throw new ForbiddenException('Old password is wrong');
     }
 
-    return this.userRepository.updateUserPassword(id, newPassword);
+    const { password, ...userWithoutPassword } =
+      this.userRepository.updateUserPassword(id, newPassword);
+
+    return userWithoutPassword;
   }
 
   deleteUser(id: string) {
