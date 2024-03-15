@@ -11,6 +11,11 @@ export class StoreService {
       artists: [],
       users: [],
       tracks: [],
+      favorites: {
+        albums: [],
+        artists: [],
+        tracks: [],
+      },
     };
   }
 
@@ -20,6 +25,10 @@ export class StoreService {
 
   getArtists() {
     return this.store.artists;
+  }
+
+  getFavorites() {
+    return this.store.favorites;
   }
 
   getUsers() {
@@ -36,6 +45,10 @@ export class StoreService {
     tracks.forEach((track) => {
       track.albumId = null;
     });
+
+    this.store.favorites.albums = this.store.favorites.albums.filter(
+      (album) => album.id !== id,
+    );
 
     const index = this.store.albums.findIndex((artist) => artist.id === id);
 
@@ -61,6 +74,10 @@ export class StoreService {
       album.artistId = null;
     });
 
+    this.store.favorites.artists = this.store.favorites.artists.filter(
+      (artist) => artist.id !== id,
+    );
+
     const index = this.store.artists.findIndex((artist) => artist.id === id);
 
     if (index !== -1) {
@@ -85,6 +102,10 @@ export class StoreService {
   }
 
   deleteTrack(id: string) {
+    this.store.favorites.tracks = this.store.favorites.tracks.filter(
+      (track) => track.id !== id,
+    );
+
     const index = this.store.tracks.findIndex((track) => track.id === id);
 
     if (index !== -1) {
