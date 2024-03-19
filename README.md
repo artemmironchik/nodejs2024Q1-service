@@ -11,6 +11,13 @@
 git clone https://github.com/artemmironchik/nodejs2024Q1-service.git
 ```
 
+## Change directory and branch
+
+```
+cd nodejs2024Q1-service
+git checkout containerization-and-database
+```
+
 ## Installing NPM modules
 
 ```
@@ -19,8 +26,16 @@ npm install
 
 ## Running application
 
+Copy `.env.example` file to `.env` by running this command
+
 ```
-npm start
+cp .env.example .env
+```
+
+Run application
+
+```
+npm run docker:up
 ```
 
 After starting the app on port (4000 as default) you can open
@@ -34,6 +49,12 @@ After application running open new terminal and enter:
 To run all tests without authorization
 
 ```
+npm run docker:test
+```
+
+or
+
+```
 npm run test
 ```
 
@@ -41,6 +62,12 @@ To run only one of all test suites
 
 ```
 npm run test -- <path to suite>
+```
+
+### Scan vulnerabilities
+
+```
+npm run docker:scout
 ```
 
 ### Auto-fix and format
