@@ -1,0 +1,10 @@
+node_modules
+.idea
+.vscode/*
+.DS_Store
+.gitignore
+npm-debug.log
+.git
+.cache
+dist
+build
