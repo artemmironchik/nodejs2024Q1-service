@@ -1,7 +1,9 @@
-FROM node:21-alpine3.18
-WORKDIR /usr/app
-COPY package*.json ./
+FROM node:20.11-alpine as build
+WORKDIR /usr/src/app
+COPY package*.json .
 RUN npm install
 COPY . .
-RUN npm run build
+FROM node:20.11-alpine as main
+WORKDIR /usr/src/app
+COPY --from=build /usr/src/app /usr/src/app
 CMD ["npm", "run", "start:dev"]
